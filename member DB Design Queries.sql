@@ -1,163 +1,176 @@
 # Member Information
 use member_db_design;
-create table Members(uid int primary key);
-insert into Members values(222),
-						  (111),
-						  (444),
-						  (333);
-select * from Members;
+CREATE TABLE Members (
+    Uid INT PRIMARY KEY
+);
 
-alter table Members
-add EMAIL varchar(13);
-alter table Members
-drop EMAIL;
+INSERT INTO Members (Uid) VALUES
+    (222),
+    (111),
+    (444),
+    (333);
 
-alter table Members
-add name varchar(13);
-update Members set name='chandu' where uid=111;
-update Members set name='ravi' where uid=222;
-update Members set name='charvi' where uid=333;
-update Members set name='anjana' where uid=444;
+SELECT * FROM Members;
 
-alter table Members
-add gender varchar(13);
+ALTER TABLE Members
+ADD Email VARCHAR(13);
 
-update Members set gender='female' where uid=111;
-update Members set gender='male' where uid=222;
-update Members set gender='female' where uid=333;
-update Members set gender='female' where uid=444;
+ALTER TABLE Members
+DROP COLUMN Email;
 
-select * from Members;
+ALTER TABLE Members
+ADD Name VARCHAR(13);
+
+UPDATE Members SET Name = 'Chandu' WHERE Uid = 111;
+UPDATE Members SET Name = 'Ravi' WHERE Uid = 222;
+UPDATE Members SET Name = 'Charvi' WHERE Uid = 333;
+UPDATE Members SET Name = 'Anjana' WHERE Uid = 444;
+
+ALTER TABLE Members
+ADD Gender VARCHAR(13);
+
+UPDATE Members SET Gender = 'Female' WHERE Uid = 111;
+UPDATE Members SET Gender = 'Male' WHERE Uid = 222;
+UPDATE Members SET Gender = 'Female' WHERE Uid = 333;
+UPDATE Members SET Gender = 'Female' WHERE Uid = 444;
+
+SELECT * FROM Members;
 
 
 # 1.PERSONAL INFORMATION
 
-create table personalDetailss(
-uid int primary key,
-name varchar(20),
-age int check(age>18),
-foreign key(uid) references Members(uid));
+CREATE TABLE PersonalDetails (
+    Uid INT PRIMARY KEY,
+    Name VARCHAR(20),
+    Age INT CHECK (Age > 18),
+    PAN VARCHAR(13),
+    FOREIGN KEY (Uid) REFERENCES Members(Uid)
+);
 
-insert into personalDetailss values(111,'chandu',24),
-								(222,'ravi',30),
-                                (333,'charvi',20),
-                                (444,'anjana',23);
+INSERT INTO PersonalDetails (Uid, Name, Age) VALUES
+    (111, 'Chandu', 24),
+    (222, 'Ravi', 30),
+    (333, 'Charvi', 20),
+    (444, 'Anjana', 23);
 
-update personalDetailss set name='niru' where uid=111;
+UPDATE PersonalDetails SET Name = 'Niru' WHERE Uid = 111;
 
-alter table personalDetailss
-add PAN varchar(13);
-update personalDetailss set PAN='bmzpv326' where uid=111;
-update personalDetailss set PAN='cgcg22' where uid=222;
-update personalDetailss set PAN='ggg32' where uid=333;
-update personalDetailss set PAN='fg578f' where uid=444;
-select * from personalDetailss;
+UPDATE PersonalDetails SET PAN = 'BMZPV326' WHERE Uid = 111;
+UPDATE PersonalDetails SET PAN = 'CGCG22' WHERE Uid = 222;
+UPDATE PersonalDetails SET PAN = 'GGG32' WHERE Uid = 333;
+UPDATE PersonalDetails SET PAN = 'FG578F' WHERE Uid = 444;
+
+SELECT * FROM PersonalDetails;
+
 
 
 # 2.EDUCATIONAL INFORMATION
-create table education_Information(
-  uid int,
-   clg_name varchar(30),
-   marks int,
-   percenage int,
-   class varchar(5),
-   foreign key(uid) references Members(uid));
-   insert into education_Information values(111,'gvp',800,80,'cse'),
-                                    (333,'chaitanya',700,70,'ece'),
-									(222,'narayana',600,60,'eee');
-                                    
-alter table education_Information
-add RollNo int unique;
+CREATE TABLE EducationInformation (
+    Uid INT,
+    CollegeName VARCHAR(30),
+    Marks INT,
+    Percentage INT,
+    Class VARCHAR(5),
+    RollNo INT UNIQUE,
+    FOREIGN KEY (Uid) REFERENCES Members(Uid)
+);
 
-update education_Information set RollNo =101 where uid=111;
-update education_Information set RollNo =102 where uid=222;
-update education_Information set RollNo =103 where uid=333;
+INSERT INTO EducationInformation (Uid, CollegeName, Marks, Percentage, Class) VALUES
+    (111, 'GVP', 800, 80, 'CSE'),
+    (333, 'Chaitanya', 700, 70, 'ECE'),
+    (222, 'Narayana', 600, 60, 'EEE');
 
-select * from education_Information;
-   
-   
-   
+UPDATE EducationInformation SET RollNo = 101 WHERE Uid = 111;
+UPDATE EducationInformation SET RollNo = 102 WHERE Uid = 222;
+UPDATE EducationInformation SET RollNo = 103 WHERE Uid = 333;
+
+SELECT * FROM EducationInformation;
+
 # 3.EMPLOYMENT DETAILS
-create table employee_Details(
-uid int primary key,
-name varchar(30),
-salary int,
-company_name varchar(15),
-foreign key(uid) references Members(uid));
-insert into employee_Details values(111,'chandu',6000,'ibc');
-insert into employee_Details values(222,'ravi',7000,'ibc');
-insert into employee_Details values(333,'charvi',8000,'ibc');
-insert into employee_Details values(444,'anjana',9000,'ibc');
+CREATE TABLE EmployeeDetails (
+    Uid INT PRIMARY KEY,
+    Name VARCHAR(30),
+    Salary INT,
+    CompanyName VARCHAR(15),
+    Role VARCHAR(15) NOT NULL,
+    FOREIGN KEY (Uid) REFERENCES Members(Uid)
+);
 
+INSERT INTO EmployeeDetails (Uid, Name, Salary, CompanyName) VALUES
+    (111, 'Chandu', 6000, 'IBC'),
+    (222, 'Ravi', 7000, 'IBC'),
+    (333, 'Charvi', 8000, 'IBC'),
+    (444, 'Anjana', 9000, 'IBC');
 
-alter table employee_Details
-add Role varchar(15) not null;
-update employee_Details set Role ='developer' where uid=111;
-update employee_Details set Role ='tester' where uid=222;
-update employee_Details set Role ='hr' where uid=333;
-update employee_Details set Role ='team lead' where uid=444;
-select * from employee_Details;
+UPDATE EmployeeDetails SET Role = 'Developer' WHERE Uid = 111;
+UPDATE EmployeeDetails SET Role = 'Tester' WHERE Uid = 222;
+UPDATE EmployeeDetails SET Role = 'HR' WHERE Uid = 333;
+UPDATE EmployeeDetails SET Role = 'Team Lead' WHERE Uid = 444;
+
+SELECT * FROM EmployeeDetails;
 
 
 # 4. CONTACT DETAILS
-create table contactIno(
-uid int,
-phone_number BIGINT,
-Email varchar(20) unique,
-foreign key(uid)references Members(uid));
-insert into contactIno values(222,1234567890,'abc@gmail.com'),
-                           (333,2345678909,'xyz@gmail.com');
-                           commit;
+CREATE TABLE ContactInfo (
+    Uid INT,
+    PhoneNumber BIGINT,
+    Email VARCHAR(20) UNIQUE,
+    LinkedInId VARCHAR(30),
+    FOREIGN KEY (Uid) REFERENCES Members(Uid)
+);
 
-alter table contactIno
-add linkedinId varchar(30);
-update contactIno set linkedinId ='abc_dhf' where uid=222;
-update contactIno set linkedinId ='app_dev' where uid=333;
+INSERT INTO ContactInfo (Uid, PhoneNumber, Email) VALUES
+    (222, 1234567890, 'abc@gmail.com'),
+    (333, 2345678909, 'xyz@gmail.com');
+COMMIT;
 
-alter table contactIno
-drop column linkedId;
-select * from contactIno;
+UPDATE ContactInfo SET LinkedInId = 'abc_dhf' WHERE Uid = 222;
+UPDATE ContactInfo SET LinkedInId = 'app_dev' WHERE Uid = 333;
 
+ALTER TABLE ContactInfo
+DROP COLUMN LinkedInId;
 
-
+SELECT * FROM ContactInfo;
 
 # 5.ADDRESS DETAILS 
 
-create table addressInformation(
-uid int,
-city varchar(20),
-state varchar(20),
-pincode int(10) not null,
-country varchar(20),
-foreign key(uid) references Members(uid)
+CREATE TABLE AddressInformation (
+    Uid INT,
+    City VARCHAR(20),
+    State VARCHAR(20),
+    Pincode INT NOT NULL,
+    Country VARCHAR(20),
+    FOREIGN KEY (Uid) REFERENCES Members(Uid)
 );
-insert into addressInformation values(111,'Durg','CG',491441,'India'),
-						(222,'Rajnandgaon','CG',491442,'India'),
-                        (333,'Vizag','AP',532201,'India');
-                        select * from addressInformation;
+
+INSERT INTO AddressInformation (Uid, City, State, Pincode, Country) VALUES
+    (111, 'Durg', 'CG', 491441, 'India'),
+    (222, 'Rajnandgaon', 'CG', 491442, 'India'),
+    (333, 'Vizag', 'AP', 532201, 'India');
+
+SELECT * FROM AddressInformation;
+
  # 6.Bank details           
-create table bankInfo
-(
- accnum bigint primary key,
- code varchar(10),
- bname varchar(20),
- uid int,
- foreign key(uid) references Members(uid)
+CREATE TABLE BankInfo (
+    AccNum BIGINT PRIMARY KEY,
+    Code VARCHAR(10),
+    BankName VARCHAR(20),
+    Uid INT,
+    Name VARCHAR(30),
+    FOREIGN KEY (Uid) REFERENCES Members(Uid)
 );
 
-insert into bankInfo values(12341,'123axl','axis',111),
-                       (76543,'321bob','bob',222),
-                       (11111,'566hdfc','hdfc',333);
-                       commit;
-                       
-                      
-alter table bankInfo
-add name varchar(30);
-update bankInfo set name ='ravi' where uid=222;
-update bankInfo set name ='chandu' where uid=111;
-update bankInfo set name ='anjana' where uid=444;
-update bankInfo set name ='charvi' where uid=333;
+INSERT INTO BankInfo (AccNum, Code, BankName, Uid) VALUES
+    (12341, '123AXL', 'Axis', 111),
+    (76543, '321BOB', 'BOB', 222),
+    (11111, '566HDFC', 'HDFC', 333);
+COMMIT;
 
- select * from bankInfo;
+UPDATE BankInfo SET Name = 'Ravi' WHERE Uid = 222;
+UPDATE BankInfo SET Name = 'Chandu' WHERE Uid = 111;
+UPDATE BankInfo SET Name = 'Anjana' WHERE Uid = 444;
+UPDATE BankInfo SET Name = 'Charvi' WHERE Uid = 333;
 
-commit;
+SELECT * FROM BankInfo;
+COMMIT;
+
